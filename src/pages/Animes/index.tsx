@@ -1,8 +1,9 @@
+import PopularAnime from "./PopularAnime";
+
 export default function Animes() {
-    return (
-      <>
-        <div>ini animes</div>
-      </>
-    );
-  }
-  
+  return (
+    <>
+      <PopularAnime />
+    </>
+  );
+}

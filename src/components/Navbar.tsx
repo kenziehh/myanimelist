@@ -43,7 +43,7 @@ const Navbar = () => {
         <div className="flex flex-col gap-8 items-start lg:flex lg:flex-row lg:gap-6 flex-1 justify-center text-secGray">
           <Link
             to="/"
-            className={`hover:text-primaryGray ${
+            className={`hover:scale-105 hover:text-primaryGray ${
               isActive("/") ? "text-primaryBlue" : ""
             }`}
           >
@@ -51,7 +51,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/animes"
-            className={`hover:text-primaryGray ${
+            className={`hover: scale-105 hover:text-primaryGray ${
               isActive("/animes") ? "text-primaryBlue" : ""
             }`}
           >
@@ -59,7 +59,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/about"
-            className={`hover:text-primaryGray ${
+            className={`hover: scale-105 hover:text-primaryGray ${
               isActive("/about") ? "text-primaryBlue" : ""
             }`}
           >
