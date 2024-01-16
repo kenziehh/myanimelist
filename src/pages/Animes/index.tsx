@@ -1,9 +1,9 @@
-import PopularAnime from "./PopularAnime";
+// import PopularAnime from "./PopularAnime";
 
 export default function Animes() {
   return (
     <>
-      <PopularAnime />
+      {/* <PopularAnime /> */}
     </>
   );
 }

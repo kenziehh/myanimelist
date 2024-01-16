@@ -1,4 +1,4 @@
-import HeroImage from "@assets/images/heroimage.png";
+import HeroImage from "/assets/images/heroimage.png";
 import Button from "@components/Button";
 import { BiSearch } from "react-icons/bi";
 

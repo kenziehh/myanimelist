@@ -5,9 +5,12 @@ import path from 'path';
 export default defineConfig({
   resolve: {
     alias: {
-      "@assets": path.resolve(__dirname,"./public/assets"),
       "@components": path.resolve(__dirname,"./src/components"),
       "@pages": path.resolve(__dirname,"./src/pages"),
+      "@services": path.resolve(__dirname,"./src/services"),
+      "@utils": path.resolve(__dirname,"./src/utils"),
+      "@models": path.resolve(__dirname,"./src/models"),
+
     },
   },
   plugins: [react()],

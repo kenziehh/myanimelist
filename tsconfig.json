@@ -23,9 +23,11 @@
     // import alias
     "baseUrl": "./",
     "paths": {
-      "@assets/*": ["assets/*"],
       "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"],
+      "@models/*": ["src/models/*"]
     }
   },
   "include": ["src"],
