@@ -18,23 +18,7 @@ export interface Anime {
   episodes: number;
   status: string;
   airing: boolean;
-  aired: {
-    from: string;
-    to: string | null;
-    prop: {
-      from: {
-        day: number;
-        month: number;
-        year: number;
-      };
-      to: {
-        day: number | null;
-        month: number | null;
-        year: number | null;
-      };
-    };
-    string: string;
-  };
+  aired: AiredDates;
   duration: string;
   rating: string;
   score: number;
