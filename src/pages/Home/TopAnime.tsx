@@ -1,29 +1,46 @@
+import Button from "@components/Button";
 import Card from "@components/Card";
 import { Anime } from "@models/anime";
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const TopAnime = () => {
   const BASE_URL = "https://api.jikan.moe/v4";
   const [anime, setAnime] = useState<Anime[]>([]);
-
+  const location = useLocation();
+  const isHome = location.pathname === "/";
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/top/anime?`);
-        const animeData = await response.json();
-        setAnime(animeData.data);
-        console.log(animeData.data);
+        if (isHome) {
+          const response = await fetch(`${BASE_URL}/top/anime?limit=10`);
+          const animeData = await response.json();
+          setAnime(animeData.data);
+        } else {
+          const response = await fetch(`${BASE_URL}/top/anime`);
+          const animeData = await response.json();
+          setAnime(animeData.data);
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching top anime:", error);
       }
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <section className="container my-10">
-      <h2 className="mb-10">Top Animes🔥</h2>
+      <div className="flex justify-between items-center mb-10">
+        <h2 className="">Top Animes🔥</h2>
+        {isHome ? (
+          <Button variant="disabled">
+            <Link to="/animes/topanimes">See All</Link>
+          </Button>
+        ) : (
+          <div></div>
+        )}
+      </div>
       <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-center">
         {anime.map((animeItem: Anime) => (
           <Card
