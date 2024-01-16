@@ -30,8 +30,15 @@ const TopAnime = () => {
   }, []);
 
   return (
-    <section className="container my-10">
-      <div className="flex justify-between items-center mb-10">
+    <section className="container mb-10">
+      {isHome ? (
+        <div></div>
+      ) : (
+        <Button variant="disabled">
+          <Link to="/">Back To Homepage</Link>
+        </Button>
+      )}
+      <div className="flex justify-between items-center my-10">
         <h2 className="">Top Animes🔥</h2>
         {isHome ? (
           <Button variant="disabled">
