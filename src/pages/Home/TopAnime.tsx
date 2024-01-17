@@ -1,12 +1,15 @@
 import Button from "@components/Button";
 import Card from "@components/Card";
+import Modal from "@components/Modal";
+import { useOnClickOutside } from "@hooks/UseOnClickOutside";
 import { Anime } from "@models/anime";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const TopAnime = () => {
   const BASE_URL = "https://api.jikan.moe/v4";
   const [anime, setAnime] = useState<Anime[]>([]);
+  const [modal, setModal] = useState<Anime>();
   const location = useLocation();
   const isHome = location.pathname === "/";
   useEffect(() => {
@@ -28,6 +31,21 @@ const TopAnime = () => {
 
     fetchData();
   }, []);
+
+  const handleSeeDetails = (mal_id: number) => {
+    console.log(mal_id);
+    const selectedAnime = anime.find(
+      (animeItem) => animeItem.mal_id === mal_id
+    );
+    setModal(selectedAnime);
+    setTimeout(() => {
+      setModal(selectedAnime);
+    }, 1000);
+  };
+
+  const handleCloseModal = () => {
+    setModal(undefined);
+  };
 
   return (
     <section className="container mb-10">
@@ -52,12 +70,12 @@ const TopAnime = () => {
         {anime.map((animeItem: Anime) => (
           <Card
             key={animeItem.mal_id}
-            imageSrc={animeItem.images.webp.image_url}
-            title={animeItem.title}
-            rating={animeItem.score}
+            anime={animeItem}
+            onClick={handleSeeDetails}
           />
         ))}
       </div>
+      {modal && <Modal anime={modal} onClose={handleCloseModal} />}
     </section>
   );
 };
