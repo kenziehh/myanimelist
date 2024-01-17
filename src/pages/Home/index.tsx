@@ -1,12 +1,15 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HeroHome from "./HeroHome";
-import TopAnime from "./TopAnime";
-
+import TopAnimes from "./TopAnimes";
 
 export default function Home() {
+  const queryClient = new QueryClient();
   return (
     <>
       <HeroHome />
-      <TopAnime />
+      <QueryClientProvider client={queryClient}>
+        <TopAnimes />
+      </QueryClientProvider>
     </>
   );
 }

@@ -1,15 +1,12 @@
 import { Anime } from "@models/anime";
 
 interface CardProps {
-  // mal_id: number;
-  // imageSrc: string;
-  // title: string;
-  // rating: number;
   anime: Anime;
   onClick?: (malId: number) => void;
+  className?: string;
 }
 
-const Card: React.FC<CardProps> = ({ anime, onClick }) => {
+const Card: React.FC<CardProps> = ({ anime, onClick, className }) => {
   const handleClick = () => {
     if (onClick) {
       onClick(anime.mal_id);
@@ -17,7 +14,7 @@ const Card: React.FC<CardProps> = ({ anime, onClick }) => {
   };
   return (
     <div
-      className="flex gap-8 items-start flex-col shadow-xl rounded-xl border-black h-[500px]"
+      className={`flex gap-8 items-start flex-col shadow-xl rounded-xl border-black h-[500px] ${className}`}
       onClick={handleClick}
     >
       <img className="w-[300px] h-[400px]" src={anime.images.webp.image_url} />

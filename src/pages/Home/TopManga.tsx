@@ -5,7 +5,7 @@ import { Anime } from "@models/anime";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const TopAnime = () => {
+const TopManga = () => {
   const BASE_URL = "https://api.jikan.moe/v4";
   const [anime, setAnime] = useState<Anime[]>([]);
   const [modal, setModal] = useState<Anime>();
@@ -15,15 +15,15 @@ const TopAnime = () => {
     const fetchData = async () => {
       try {
         if (isHome) {
-          const response = await fetch(`${BASE_URL}/top/anime?limit=10`);
+          const response = await fetch(`${BASE_URL}/top/manga?limit=10`);
           const animeData = await response.json();
           setAnime(animeData.data);
         } else {
-          const response = await fetch(`${BASE_URL}/top/anime`);
+          const response = await fetch(`${BASE_URL}/top/manga`);
           const animeData = await response.json();
           setAnime(animeData.data);
         }
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       } catch (error) {
         if ((error as any).response && (error as any).response.status === 429) {
           console.error("Rate limited. Waiting and retrying...");
@@ -48,6 +48,7 @@ const TopAnime = () => {
       setModal(selectedAnime);
     }, 1000);
   };
+
   const handleCloseModal = () => {
     setModal(undefined);
   };
@@ -62,10 +63,10 @@ const TopAnime = () => {
         </Button>
       )}
       <div className="flex justify-between items-center my-10">
-        <h2 className="">Top Animes🔥</h2>
+        <h2 className="">Top Mangas🔥</h2>
         {isHome ? (
           <Button variant="disabled">
-            <Link to="/animes/topanimes">See All</Link>
+            <Link to="/mangas/topmangas">See All</Link>
           </Button>
         ) : (
           <div></div>
@@ -85,4 +86,4 @@ const TopAnime = () => {
   );
 };
 
-export default TopAnime;
+export default TopManga;

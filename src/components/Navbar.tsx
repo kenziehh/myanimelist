@@ -58,12 +58,12 @@ const Navbar = () => {
             Animes
           </Link>
           <Link
-            to="/about"
+            to="/mangas"
             className={`hover: scale-105 hover:text-primaryGray ${
-              isActive("/about") ? "text-primaryBlue" : ""
+              isActive("/mangas") ? "text-primaryBlue" : ""
             }`}
           >
-            About
+            Mangas
           </Link>
         </div>
         <AuthNavButton className="flex flex-col" />

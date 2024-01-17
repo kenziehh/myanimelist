@@ -2,51 +2,41 @@ import Button from "@components/Button";
 import Card from "@components/Card";
 import Modal from "@components/Modal";
 import { Anime } from "@models/anime";
-import { useEffect, useState } from "react";
+import { BASE_URL } from "@services/api";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const TopAnime = () => {
-  const BASE_URL = "https://api.jikan.moe/v4";
-  const [anime, setAnime] = useState<Anime[]>([]);
+export default function TopAnimes() {
   const [modal, setModal] = useState<Anime>();
   const location = useLocation();
   const isHome = location.pathname === "/";
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (isHome) {
-          const response = await fetch(`${BASE_URL}/top/anime?limit=10`);
-          const animeData = await response.json();
-          setAnime(animeData.data);
-        } else {
-          const response = await fetch(`${BASE_URL}/top/anime`);
-          const animeData = await response.json();
-          setAnime(animeData.data);
-        }
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      } catch (error) {
-        if ((error as any).response && (error as any).response.status === 429) {
-          console.error("Rate limited. Waiting and retrying...");
-          await new Promise((resolve) => setTimeout(resolve, 5000));
-          fetchData();
-        } else {
-          console.error("Error fetching top anime:", error);
-        }
+  const wait = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+  const { data, isLoading } = useQuery({
+    queryFn: async () => {
+      await wait(1000);
+      if (isHome) {
+        const { data } = await axios.get(`${BASE_URL}/top/anime?limit=10`);
+        return data.data as Anime[];
+      } else {
+        const { data } = await axios.get(`${BASE_URL}/top/anime`);
+        return data.data as Anime[];
       }
-    };
+    },
+    queryKey: ["animes"],
+  });
+  if (isLoading) {
+    return <div className="flex justify-center">is Loading...</div>;
+  }
 
-    fetchData();
-  }, []);
-
-  const handleSeeDetails = (mal_id: number) => {
+  const handleOpenModal = (mal_id: number) => {
     console.log(mal_id);
-    const selectedAnime = anime.find(
+    const selectedAnime = data?.find(
       (animeItem) => animeItem.mal_id === mal_id
     );
     setModal(selectedAnime);
-    setTimeout(() => {
-      setModal(selectedAnime);
-    }, 1000);
   };
   const handleCloseModal = () => {
     setModal(undefined);
@@ -72,17 +62,15 @@ const TopAnime = () => {
         )}
       </div>
       <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-center">
-        {anime.map((animeItem: Anime) => (
+        {data?.map((animeItem: Anime) => (
           <Card
             key={animeItem.mal_id}
             anime={animeItem}
-            onClick={handleSeeDetails}
+            onClick={handleOpenModal}
           />
         ))}
       </div>
       {modal && <Modal anime={modal} onClose={handleCloseModal} />}
     </section>
   );
-};
-
-export default TopAnime;
+}
