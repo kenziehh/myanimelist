@@ -1,4 +1,4 @@
-export interface Anime {
+export interface Manga {
   mal_id: number;
   url: string;
   images: {
@@ -13,13 +13,11 @@ export interface Anime {
   title_japanese: string;
   title_synonyms: string;
   type: string;
-  source: string;
-  episodes: number;
+  chapters: number;
+  volumes: number;
   status: string;
-  airing: boolean;
-  aired: AiredDates;
-  duration: string;
-  rating: string;
+  publishing: boolean;
+  published: publishedDate;
   score: number;
   scored_by: number;
   rank: number;
@@ -28,17 +26,8 @@ export interface Anime {
   favorites: number;
   synopsis: string;
   background: string;
-  season: string;
-  year: number;
-  broadcast: {
-    day: string;
-    time: string;
-    timezone: string;
-    string: string;
-  };
-  producers: Producer;
-  licensors: any;
-  studios: Studio;
+  authors: Author;
+  serializations: Serialization;
   genres: Genre;
   explicit_genres: Genre;
   themes: Theme;

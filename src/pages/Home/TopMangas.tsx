@@ -1,14 +1,14 @@
 import Button from "@components/Button";
 import Card from "@components/Card";
 import Modal from "@components/Modal";
-import { Anime } from "@models/anime";
-import { fetchTop10Animes, fetchTopAnimes } from "@services/api/TopAnime";
+import { Manga } from "@models/manga";
+import { fetchTop10Mangas, fetchTopMangas } from "@services/api/TopManga";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-export default function TopAnimes() {
-  const [modal, setModal] = useState<Anime>();
+export default function TopMangas() {
+  const [modal, setModal] = useState<Manga>();
   const location = useLocation();
   const isHome = location.pathname === "/";
   const wait = (ms: number) =>
@@ -16,9 +16,9 @@ export default function TopAnimes() {
   const { data, isLoading, isError, refetch } = useQuery({
     queryFn: async () => {
       await wait(1000);
-      return isHome ? fetchTop10Animes() : fetchTopAnimes();
+      return isHome ? fetchTop10Mangas() : fetchTopMangas();
     },
-    queryKey: ["animes"],
+    queryKey: ["mangas"],
   });
   if (isLoading) {
     return <div className="flex justify-center mt-32">is Loading...</div>;
@@ -33,12 +33,13 @@ export default function TopAnimes() {
       </div>
     );
   }
+
   const handleOpenModal = (mal_id: number) => {
     console.log(mal_id);
-    const selectedAnime = data?.find(
-      (animeItem) => animeItem.mal_id === mal_id
+    const selectedManga = data?.find(
+      (mangaItem) => mangaItem.mal_id === mal_id
     );
-    setModal(selectedAnime);
+    setModal(selectedManga);
   };
   const handleCloseModal = () => {
     setModal(undefined);
@@ -54,20 +55,20 @@ export default function TopAnimes() {
         </Button>
       )}
       <div className="flex justify-between items-center my-10">
-        <h2 className="">Top Animes🔥</h2>
+        <h2 className="">Top Mangas📚</h2>
         {isHome ? (
           <Button variant="disabled">
-            <Link to="/animes/topanimes">See All</Link>
+            <Link to="/mangas/topmangas">See All</Link>
           </Button>
         ) : (
           <div></div>
         )}
       </div>
       <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-center">
-        {data?.map((animeItem: Anime) => (
+        {data?.map((mangaItem: Manga) => (
           <Card
-            key={animeItem.mal_id}
-            data={animeItem}
+            key={mangaItem.mal_id}
+            data={mangaItem}
             onClick={handleOpenModal}
           />
         ))}
