@@ -16,7 +16,7 @@ export default function TopAnimes() {
   const { data, isLoading, isError, refetch } = useQuery({
     queryFn: async () => {
       await wait(1000);
-      return isHome ? fetchTop10Animes() : fetchTopAnimes();
+      return isHome ? fetchTop10Animes() : fetchTopAnimes(1);
     },
     queryKey: ["animes"],
   });
@@ -45,13 +45,7 @@ export default function TopAnimes() {
 
   return (
     <section className="container mb-10">
-      {isHome ? (
-        <div></div>
-      ) : (
-        <Button variant="disabled">
-          <Link to="/">Back To Homepage</Link>
-        </Button>
-      )}
+      {isHome ? <div></div> : null}
       <div className="flex justify-between items-center my-10">
         <h2 className="">Top Animes🔥</h2>
         {isHome ? (

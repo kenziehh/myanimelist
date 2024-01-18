@@ -8,6 +8,7 @@ import { BiSearch } from "react-icons/bi";
 import { Manga } from "@models/manga";
 import { fetchSearch5Manga } from "@services/api/SearchManga";
 import ListCard from "./ListCard";
+import { Link } from "react-router-dom";
 
 interface InputSearchProps {
   placeHolder?: string;
@@ -32,6 +33,8 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
           const mangaData = await fetchSearch5Manga(searchValue);
           return mangaData;
         }
+      } else {
+        return [];
       }
     },
     queryKey: ["animes"],
@@ -53,7 +56,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
         refetch();
         setIsOpen(true);
       }
-    }, 500);
+    }, 1000);
     return () => clearTimeout(timeoutId);
   }, [searchRef.current?.value]);
 
@@ -104,6 +107,13 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
       {isLoading && (
         <div className="flex justify-center text-md">Finding...</div>
       )}
+      <div>
+        {isOpen && searchResult.length > 0 ? (
+          <Link to="" className="text-primaryBlue">
+            view all result
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 };
