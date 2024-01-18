@@ -7,18 +7,8 @@ export const fetchTop10Animes = async () => {
   return data.data as Anime[];
 };
 
-export const fetchTopAnimes = async () => {
-  const { data } = await axios.get(`${BASE_URL}/top/anime`);
+export const fetchTopAnimes = async (page: number) => {
+  const { data } = await axios.get(`${BASE_URL}/top/anime?page=${page}`);
   return data.data as Anime[];
 };
 
-export const fetchSearchAnime = async (searchValue: string) => {
-  try {
-    console.log(`kepassing${searchValue}`)
-    const { data } = await axios.get(`${BASE_URL}/anime?q=${searchValue}`);
-    return data.data as Anime[];
-  } catch (error) {
-    console.error("Error fetching anime:", error);
-    return [];
-  }
-};

@@ -34,7 +34,6 @@ export default function TopAnimes() {
     );
   }
   const handleOpenModal = (mal_id: number) => {
-    console.log(mal_id);
     const selectedAnime = data?.find(
       (animeItem) => animeItem.mal_id === mal_id
     );
