@@ -1,12 +1,7 @@
 import TopAnimes from "@pages/Home/TopAnimes";
 
 const AllTopAnimes = () => {
-  return (
-    <div>
-        
-      <TopAnimes />
-    </div>
-  );
+  return <TopAnimes />;
 };
 
 export default AllTopAnimes;

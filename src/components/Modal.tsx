@@ -1,11 +1,11 @@
-import { Anime } from "@models/anime";
 import Button from "./Button";
 import { useRef } from "react";
 import { useOnClickOutside } from "@hooks/UseOnClickOutside";
-import { Manga } from "@models/manga";
+import { AnimeItem } from "@models/animeItem";
+import { MangaItem } from "@models/mangaItem";
 
 interface ModalProps {
-  data: Anime | Manga;
+  data: AnimeItem | MangaItem;
   onClose?: () => void;
 }
 

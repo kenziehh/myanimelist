@@ -1,11 +1,11 @@
 import InputSearch from "@components/InputSearch";
-import TopMangas from "@pages/Home/TopMangas";
+import AllTopMangas from "./AllTopMangas";
 
 export default function Mangas() {
   return (
     <>
-      <InputSearch placeHolder="Search Anime Here" type="manga" />
-      <TopMangas />
+      <InputSearch placeHolder="Search Manga Here" type="manga" />
+      <AllTopMangas/>
     </>
   );
 }

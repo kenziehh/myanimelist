@@ -4,10 +4,10 @@ import { Manga } from "@models/manga";
 
 export const fetchTop10Mangas = async () => {
   const { data } = await axios.get(`${BASE_URL}/top/manga?limit=10`);
-  return data.data as Manga[];
+  return data as Manga;
 };
 
-export const fetchTopMangas = async () => {
-  const { data } = await axios.get(`${BASE_URL}/top/manga`);
-  return data.data as Manga[];
+export const fetchTopMangas = async (page: number) => {
+  const { data } = await axios.get(`${BASE_URL}/top/manga?page=${page}`);
+  return data as Manga;
 };

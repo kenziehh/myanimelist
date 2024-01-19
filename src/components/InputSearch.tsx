@@ -1,14 +1,14 @@
-import { Anime } from "@models/anime";
 import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSearch5Anime } from "@services/api/SearchAnime";
 import { RxCross2 } from "react-icons/rx";
 import { BiSearch } from "react-icons/bi";
-import { Manga } from "@models/manga";
 import { fetchSearch5Manga } from "@services/api/SearchManga";
 import ListCard from "./ListCard";
 import { Link } from "react-router-dom";
+import { AnimeItem } from "@models/animeItem";
+import { MangaItem } from "@models/mangaItem";
 
 interface InputSearchProps {
   placeHolder?: string;
@@ -16,7 +16,7 @@ interface InputSearchProps {
 }
 
 const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
-  const [searchResult, setSearchResult] = useState<Anime[] | Manga[]>([]);
+  const [searchResult, setSearchResult] = useState<AnimeItem[] | MangaItem[]>();
   const searchRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const wait = (ms: number) =>
@@ -24,6 +24,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
   const { data, isLoading, isError, refetch } = useQuery({
     queryFn: async () => {
       const searchValue = searchRef.current?.value;
+      console.log(searchValue);
       if (searchValue) {
         await wait(1000);
         if (type === "anime") {
@@ -33,21 +34,11 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
           const mangaData = await fetchSearch5Manga(searchValue);
           return mangaData;
         }
-      } else {
-        return [];
       }
     },
-    queryKey: ["searc"],
+    queryKey: ["searchResult"],
     enabled: false,
   });
-
-  const handleSearchIcon = () => {
-    if (isOpen) {
-      setIsOpen(false);
-    } else {
-      setIsOpen(true);
-    }
-  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -63,8 +54,24 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
   useEffect(() => {
     if (data) {
       setSearchResult(data);
+    } else {
+      setSearchResult(undefined);
     }
   }, [data]);
+
+  const handleSearchIcon = async () => {
+    const searchValue = searchRef.current?.value;
+    if (searchValue) {
+      await refetch();
+      setIsOpen(true);
+    }
+  };
+
+  const handleClearIcon = () => {
+    searchRef.current && (searchRef.current.value = "");
+    setIsOpen(false);
+    setSearchResult(undefined);
+  };
 
   return (
     <div className="flex items-center flex-col my-10">
@@ -77,14 +84,18 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
             ref={searchRef}
             onChange={() => refetch()}
           />
-          <button className="py-1 px-2" onClick={handleSearchIcon}>
-            {isOpen ? <RxCross2 /> : <BiSearch />}
+          <button className="py-1 px-2">
+            {isOpen ? (
+              <RxCross2 onClick={handleClearIcon} />
+            ) : (
+              <BiSearch onClick={handleSearchIcon} />
+            )}
           </button>
         </div>
 
         <div className="flex flex-col">
           {isOpen
-            ? searchResult.map((resultData: Anime | Manga) => (
+            ? searchResult?.map((resultData: AnimeItem | MangaItem) => (
                 <ListCard
                   key={resultData.mal_id}
                   image={resultData.images.webp.small_image_url}
@@ -108,7 +119,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
         <div className="flex justify-center text-md">Finding...</div>
       )}
       <div>
-        {isOpen && searchResult.length > 0 ? (
+        {isOpen && (searchResult?.length ?? 0) > 0 ? (
           <Link to="" className="text-primaryBlue">
             View All Results
           </Link>

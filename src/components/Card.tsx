@@ -1,7 +1,7 @@
-import { Anime } from "@models/anime";
-import { Manga } from "@models/manga";
+import { AnimeItem} from "@models/animeItem";
+import { MangaItem } from "@models/mangaItem";
 
-type CardData = Anime | Manga;
+type CardData = AnimeItem | MangaItem;
 interface CardProps {
   data: CardData;
   onClick?: (malId: number) => void;

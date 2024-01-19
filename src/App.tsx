@@ -3,8 +3,8 @@ import Home from "@pages/Home";
 import RootLayout from "@pages/layout";
 import Animes from "@pages/Animes";
 import Mangas from "@pages/Mangas";
-import TopMangas from "@pages/Home/TopMangas";
-import TopAnimes from "@pages/Home/TopAnimes";
+import AllTopMangas from "@pages/Mangas/AllTopMangas";
+import AllTopAnimes from "@pages/Animes/AllTopAnimes";
 
 function App() {
   return (
@@ -14,11 +14,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/animes">
             <Route index element={<Animes />} />
-            <Route path="/animes/topanimes" element={<TopAnimes />} />
+            <Route path="/animes/topanimes" element={<AllTopAnimes />} />
           </Route>
           <Route path="/mangas">
             <Route index element={<Mangas />} />
-            <Route path="/mangas/topmangas" element={<TopMangas />} />
+            <Route path="/mangas/topmangas" element={<AllTopMangas />} />
           </Route>
         </Route>
       </Routes>
