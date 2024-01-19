@@ -47,13 +47,6 @@ export default function TopMangas() {
 
   return (
     <section className="container mb-10">
-      {isHome ? (
-        <div></div>
-      ) : (
-        <Button variant="disabled">
-          <Link to="/">Back To Homepage</Link>
-        </Button>
-      )}
       <div className="flex justify-between items-center my-10">
         <h2 className="">Top Mangas📚</h2>
         {isHome ? (

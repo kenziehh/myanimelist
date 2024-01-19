@@ -37,7 +37,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
         return [];
       }
     },
-    queryKey: ["animes"],
+    queryKey: ["searc"],
     enabled: false,
   });
 
@@ -110,7 +110,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
       <div>
         {isOpen && searchResult.length > 0 ? (
           <Link to="" className="text-primaryBlue">
-            view all result
+            View All Results
           </Link>
         ) : null}
       </div>

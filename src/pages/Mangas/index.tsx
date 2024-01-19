@@ -1,11 +1,11 @@
 import InputSearch from "@components/InputSearch";
+import TopMangas from "@pages/Home/TopMangas";
 
 export default function Mangas() {
   return (
     <>
-      <section className="container flex justify-center">
-        <InputSearch placeHolder="Search Anime Here" type="manga" />
-      </section>
+      <InputSearch placeHolder="Search Anime Here" type="manga" />
+      <TopMangas />
     </>
   );
 }

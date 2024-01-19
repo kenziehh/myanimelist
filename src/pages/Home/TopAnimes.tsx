@@ -18,7 +18,7 @@ export default function TopAnimes() {
       await wait(1000);
       return isHome ? fetchTop10Animes() : fetchTopAnimes(1);
     },
-    queryKey: ["animes"],
+    queryKey: [isHome],
   });
   if (isLoading) {
     return <div className="flex justify-center mt-32">is Loading...</div>;
