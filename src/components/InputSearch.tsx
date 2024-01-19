@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "./Button";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSearch5Anime } from "@services/api/SearchAnime";
 import { RxCross2 } from "react-icons/rx";
@@ -9,6 +8,7 @@ import ListCard from "./ListCard";
 import { Link } from "react-router-dom";
 import { AnimeItem } from "@models/animeItem";
 import { MangaItem } from "@models/mangaItem";
+import SkeletonListCard from "./Loading/SkeletonListCard";
 
 interface InputSearchProps {
   placeHolder?: string;
@@ -21,10 +21,9 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const wait = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryFn: async () => {
       const searchValue = searchRef.current?.value;
-      console.log(searchValue);
       if (searchValue) {
         await wait(1000);
         if (type === "anime") {
@@ -41,23 +40,20 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
   });
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      const searchValue = searchRef.current?.value;
-      if (searchValue) {
-        refetch();
-        setIsOpen(true);
-      }
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-  }, [searchRef.current?.value]);
-
-  useEffect(() => {
     if (data) {
       setSearchResult(data);
-    } else {
-      setSearchResult(undefined);
     }
   }, [data]);
+
+  const handleOnChange = () => {
+    const searchValue = searchRef.current?.value;
+    if (searchValue !== "") {
+      refetch();
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  };
 
   const handleSearchIcon = async () => {
     const searchValue = searchRef.current?.value;
@@ -82,7 +78,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
             type="text"
             placeholder={placeHolder}
             ref={searchRef}
-            onChange={() => refetch()}
+            onChange={handleOnChange}
           />
           <button className="py-1 px-2">
             {isOpen ? (
@@ -94,8 +90,11 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
         </div>
 
         <div className="flex flex-col">
-          {isOpen
-            ? searchResult?.map((resultData: AnimeItem | MangaItem) => (
+          {isLoading
+            ? Array.from({ length: 5 }, (_, index) => (
+                <SkeletonListCard key={index} />
+              ))
+            : searchResult?.map((resultData: AnimeItem | MangaItem) => (
                 <ListCard
                   key={resultData.mal_id}
                   image={resultData.images.webp.small_image_url}
@@ -103,21 +102,10 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
                   desc={resultData.synopsis}
                   link={resultData.mal_id.toString()}
                 />
-              ))
-            : null}
+              ))}
         </div>
       </div>
-      {isError && (
-        <div className="flex flex-col items-center">
-          <p className="text-red-500 mb-4">Error fetching data</p>
-          <Button onClick={() => refetch()} variant="primary">
-            Retry
-          </Button>
-        </div>
-      )}
-      {isLoading && (
-        <div className="flex justify-center text-md">Finding...</div>
-      )}
+
       <div>
         {isOpen && (searchResult?.length ?? 0) > 0 ? (
           <Link to="" className="text-primaryBlue">

@@ -5,7 +5,7 @@ export default function Mangas() {
   return (
     <>
       <InputSearch placeHolder="Search Manga Here" type="manga" />
-      <AllTopMangas/>
+      <AllTopMangas />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import Button from "@components/Button";
 import Card from "@components/Card";
+import SkeletonCard from "@components/Loading/SkeletonCard";
 import Modal from "@components/Modal";
 import Pagination from "@components/Pagination";
 import { MangaItem } from "@models/mangaItem";
@@ -22,9 +23,7 @@ export default function TopMangas() {
     },
     queryKey: ["topmangas", page],
   });
-  if (isLoading) {
-    return <div className="flex justify-center mt-32">is Loading...</div>;
-  }
+
   if (isError) {
     return (
       <div className="flex flex-col items-center">
@@ -59,15 +58,20 @@ export default function TopMangas() {
         )}
       </div>
       <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 items-center">
-        {data?.data.map((mangaItem: MangaItem) => (
-          <Card
-            key={mangaItem.mal_id}
-            data={mangaItem}
-            onClick={handleOpenModal}
-          />
-        ))}
+        {isLoading
+          ? Array.from({ length: 10 }, (_, index) => (
+              <SkeletonCard key={index} />
+            ))
+          : data?.data.map((mangaItem: MangaItem) => (
+              <Card
+                key={mangaItem.mal_id}
+                data={mangaItem}
+                onClick={handleOpenModal}
+              />
+            ))}
       </div>
       {modal && <Modal data={modal} onClose={handleCloseModal} />}
+
       {isAll ? (
         <Pagination
           page={page}
