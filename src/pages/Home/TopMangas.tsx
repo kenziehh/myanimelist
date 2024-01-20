@@ -70,7 +70,7 @@ export default function TopMangas() {
               />
             ))}
       </div>
-      {modal && <Modal data={modal} onClose={handleCloseModal} />}
+      {modal && <Modal data={modal} onClose={handleCloseModal} linkTo={`/mangas/${modal.mal_id}`}  />}
 
       {isAll ? (
         <Pagination

@@ -68,7 +68,7 @@ export default function TopAnimes() {
               />
             ))}
       </div>
-      {modal && <Modal data={modal} onClose={handleCloseModal} />}
+      {modal && <Modal data={modal} onClose={handleCloseModal} linkTo={`/animes/${modal.mal_id}`} />}
       {isAll ? (
         <Pagination
           page={page}

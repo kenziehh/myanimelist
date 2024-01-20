@@ -22,7 +22,7 @@ const AnimeDetails = () => {
   });
 
   if (isLoading) {
-    return <SkeletonCardDetail />;
+    return <SkeletonCardDetail withVideo={true}/>;
   }
 
   if (isError) {
@@ -32,7 +32,6 @@ const AnimeDetails = () => {
   return (
     <div>
       <CardDetail withVideo={true} data={data} key={data?.mal_id} />
-      {data?.title}
     </div>
   );
 };

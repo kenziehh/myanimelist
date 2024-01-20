@@ -14,11 +14,11 @@ const MangaDetails = () => {
       if (id) {
         await wait(3000);
         const mangaId = parseInt(id, 10);
-        return fetchMangaById(mangaId); 
+        return fetchMangaById(mangaId);
       }
     },
     queryKey: [id],
-    enabled: Boolean(id), 
+    enabled: Boolean(id),
   });
 
   if (isLoading) {
@@ -31,8 +31,7 @@ const MangaDetails = () => {
 
   return (
     <div>
-      <CardDetail data={data} key={data?.mal_id}/>
-      {data?.title}
+      <CardDetail data={data} key={data?.mal_id} />
     </div>
   );
 };
