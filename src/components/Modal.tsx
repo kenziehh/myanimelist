@@ -3,14 +3,17 @@ import { useRef } from "react";
 import { useOnClickOutside } from "@hooks/UseOnClickOutside";
 import { AnimeItem } from "@models/animeItem";
 import { MangaItem } from "@models/mangaItem";
+import { Link } from "react-router-dom";
 
 interface ModalProps {
   data: AnimeItem | MangaItem;
   onClose?: () => void;
+  linkTo?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ data, onClose, linkTo }) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
+
   if (onClose) {
     useOnClickOutside(modalRef, onClose);
   }
@@ -32,6 +35,9 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
           <div className="flex justify-end">
             <Button variant="default" className="" onClick={onClose}>
               Close
+            </Button>
+            <Button variant="default" className="">
+              <Link to={linkTo ?? ""}> See More Detail</Link>
             </Button>
           </div>
         </div>
