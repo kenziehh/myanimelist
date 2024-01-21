@@ -1,6 +1,7 @@
 import HeroImage from "/assets/images/heroimage.png";
 import Button from "@components/Button";
 import { BiSearch } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const HeroHome = () => {
   return (
@@ -11,9 +12,18 @@ const HeroHome = () => {
           Access all information about animes and mangas and meet your online
           animanga community in here
         </p>
-        <Button className="hover:scale-105">
-          Find Anime <BiSearch />
-        </Button>
+        <div className="flex flex-col md:flex-row gap-4">
+          <Button className="hover:scale-105">
+            <Link to="/animes" className="flex items-center gap-4">
+              Explore Anime <BiSearch />
+            </Link>
+          </Button>
+          <Button variant="default" className="hover:scale-105">
+            <Link to="/mangas" className="flex items-center gap-4">
+              Explore Manga <BiSearch />
+            </Link>
+          </Button>
+        </div>
       </div>
       <img src={HeroImage} className="max-w-[600px]" />
     </section>

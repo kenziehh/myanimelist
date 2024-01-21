@@ -1,6 +1,6 @@
 import Button from "@components/Button";
 import Card from "@components/Card";
-import SkeletonCard from "@components/Loading/SkeletonCard";
+import SkeletonCard from "@components/loading/SkeletonCard";
 import Modal from "@components/Modal";
 import Pagination from "@components/Pagination";
 import { MangaItem } from "@models/mangaItem";

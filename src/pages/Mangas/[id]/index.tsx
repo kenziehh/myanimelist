@@ -1,5 +1,5 @@
 import CardDetail from "@components/CardDetail";
-import SkeletonCardDetail from "@components/Loading/SkeletonCardDetail";
+import SkeletonCardDetail from "@components/loading/SkeletonCardDetail";
 import { fetchMangaById } from "@services/api/getMangaById";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";

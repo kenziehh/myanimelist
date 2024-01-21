@@ -4,7 +4,7 @@ import AllTopMangas from "./AllTopMangas";
 export default function Mangas() {
   return (
     <>
-      <InputSearch placeHolder="Search Manga Here" type="manga" />
+      <InputSearch placeHolder="Search Manga Here" type="manga" queryKey="searchManga" />
       <AllTopMangas />
     </>
   );

@@ -8,14 +8,20 @@ import ListCard from "./ListCard";
 import { Link } from "react-router-dom";
 import { AnimeItem } from "@models/animeItem";
 import { MangaItem } from "@models/mangaItem";
-import SkeletonListCard from "./Loading/SkeletonListCard";
+import SkeletonListCard from "./loading/SkeletonListCard";
+import Button from "./Button";
 
 interface InputSearchProps {
   placeHolder?: string;
   type?: string;
+  queryKey?: string;
 }
 
-const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
+const InputSearch: React.FC<InputSearchProps> = ({
+  placeHolder,
+  type,
+  queryKey,
+}) => {
   const [searchResult, setSearchResult] = useState<AnimeItem[] | MangaItem[]>();
   const searchRef = useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -23,7 +29,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
     new Promise((resolve) => setTimeout(resolve, ms));
   const { data, isLoading, refetch } = useQuery({
     queryFn: async () => {
-      const searchValue = searchRef.current?.value;
+      const searchValue = searchRef.current!.value;
       if (searchValue) {
         await wait(1000);
         if (type === "anime") {
@@ -35,7 +41,7 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
         }
       }
     },
-    queryKey: ["searchResult"],
+    queryKey: [queryKey],
     enabled: false,
   });
 
@@ -68,13 +74,12 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
     setIsOpen(false);
     setSearchResult(undefined);
   };
-
   return (
     <div className="flex items-center flex-col my-10">
       <div className="flex flex-col rounded-sm px-2 items-center justify-between">
         <div>
           <input
-            className="text-center py-1 px-4"
+            className="text-center py-1 px-4 mb-4"
             type="text"
             placeholder={placeHolder}
             ref={searchRef}
@@ -108,9 +113,11 @@ const InputSearch: React.FC<InputSearchProps> = ({ placeHolder, type }) => {
 
       <div>
         {isOpen && (searchResult?.length ?? 0) > 0 ? (
-          <Link to="" className="text-primaryBlue">
-            View All Results
-          </Link>
+          <Button className="border-white">
+            <Link to={`/${type}s/search/${searchRef.current?.value}`}>
+              View All Results
+            </Link>
+          </Button>
         ) : null}
       </div>
     </div>
