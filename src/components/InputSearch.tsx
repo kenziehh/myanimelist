@@ -8,8 +8,8 @@ import ListCard from "./ListCard";
 import { Link } from "react-router-dom";
 import { AnimeItem } from "@models/animeItem";
 import { MangaItem } from "@models/mangaItem";
-import SkeletonListCard from "./loading/SkeletonListCard";
 import Button from "./Button";
+import SkeletonListCard from "./loading/SkeletonListCard";
 
 interface InputSearchProps {
   placeHolder?: string;
