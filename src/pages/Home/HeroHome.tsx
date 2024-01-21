@@ -25,7 +25,7 @@ const HeroHome = () => {
           </Button>
         </div>
       </div>
-      <img src={HeroImage} className="max-w-[600px]" />
+      <img src={HeroImage} className="max-w-[450px] sm:max-w-[600px]" />
     </section>
   );
 };
