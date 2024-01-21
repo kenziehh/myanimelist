@@ -1,6 +1,6 @@
 import Button from "@components/Button";
 import Card from "@components/Card";
-import SkeletonCard from "@components/Loading/SkeletonCard";
+import SkeletonCard from "@components/loading/SkeletonCard";
 import Modal from "@components/Modal";
 import Pagination from "@components/Pagination";
 import { AnimeItem } from "@models/animeItem";
@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+//handle
 export default function TopAnimes() {
   const [modal, setModal] = useState<AnimeItem>();
   const [page, setPage] = useState<number>(1);

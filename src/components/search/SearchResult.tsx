@@ -1,7 +1,7 @@
 import Card from "@components/Card";
 import InputSearch from "@components/InputSearch";
+import SkeletonCard from "@components/loading/SkeletonCard";
 import Modal from "@components/Modal";
-import SkeletonCard from "@components/Loading/SkeletonCard";
 import { AnimeItem } from "@models/animeItem";
 import { MangaItem } from "@models/mangaItem";
 import { fetchSearchManga } from "@services/api/SearchManga";
